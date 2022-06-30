@@ -725,7 +725,7 @@ main .carritoCompras .carrito-contenedor table tbody tr td img {
   box-shadow: 0 0 10px 2px rgba(117, 185, 0, 0.7607843137);
 }
 main .carritoCompras .carrito-contenedor table tbody tr td button {
-  margin: 0 3px;
+  margin: 0 1px;
 }
 main .carritoCompras .carrito-contenedor table tbody tr td .incrementar {
   background-color: #0d6efd;
@@ -744,6 +744,15 @@ main .carritoCompras .carrito-contenedor table tbody tr td .decrementar {
 }
 main .carritoCompras .carrito-contenedor table tbody tr td .decrementar:hover {
   background-color: rgb(179, 6, 6);
+}
+main .carritoCompras .carrito-contenedor table tbody tr td .eliminar {
+  background-color: rgba(25, 176, 235, 0.631372549);
+  color: #eee;
+  border-radius: 0.2em;
+  border: none;
+}
+main .carritoCompras .carrito-contenedor table tbody tr td .eliminar:hover {
+  background-color: rgb(4, 0, 255);
 }
 main .carritoCompras .carrito-contenedor table tbody th {
   color: #76b900;

@@ -927,7 +927,7 @@ main {
               }
 
               button {
-                margin: 0 3px;
+                margin: 0 1px;
               }
 
               .incrementar {
@@ -949,6 +949,17 @@ main {
 
                 &:hover {
                   background-color: rgb(179, 6, 6);
+                }
+              }
+
+              .eliminar {
+                background-color: #19b0eba1;
+                color: #eee;
+                border-radius: 0.2em;
+                border: none;
+
+                &:hover {
+                  background-color: rgb(4, 0, 255);
                 }
               }
             }

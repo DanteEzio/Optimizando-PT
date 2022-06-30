@@ -60,6 +60,26 @@ const mostrarProductos = (data) => {
   });
 };
 
+const alertAgregar = (mensaje) => {
+  swal.fire({
+    // position: "bottom-end",
+    showConfirmButtom: true,
+    // toast: true,
+    timer: 2000,
+    // timerProgressBar: true,
+    title: mensaje,
+    // text: "Pronto nos pondremos en contacto con usted!",
+    icon: "success",
+    confirmButtonText: "Continue",
+    confirmButtonColor: "#76b900",
+    background: "#1a1a1ad2",
+    backdrop: "#75b90030",
+    color: "#eee",
+    // width: "25em",
+    // textContent: "uppercase",
+  });
+};
+
 //Aqui creamos un carrito de objetos para que sea mas sencilla la manipulacion de las cantidades
 let carrito = {};
 
@@ -73,7 +93,9 @@ const detectarBotones = (data) => {
       // console.log(`Se selecciono ${btn.id}`);
       const producto = data.find((item) => `boton${item.id}` == btn.id);
       // console.log(producto)
-      alert(`Se agrego ${producto.nombre} al carrito`);
+      // alert(`Se agrego ${producto.nombre} al carrito`);
+
+      alertAgregar(`Se agrego ${producto.nombre} al carrito`);
 
       // Aquí estamos agregando el atributo cantidad, que sería la cantidad de productos que estaría comprando el usuario
       producto.cantidad = 1;
@@ -84,7 +106,9 @@ const detectarBotones = (data) => {
       //   producto.cantidad = carrito[producto.id].cantidad + 1;
       // }
       // *** Esto es lo mismo que lo de arriba solo que con operador TERNARIO ***
-      carrito.hasOwnProperty(producto.id) ? producto.cantidad = carrito[producto.id].cantidad + 1 : false
+      carrito.hasOwnProperty(producto.id)
+        ? (producto.cantidad = carrito[producto.id].cantidad + 1)
+        : false;
       //Indicamos su índice y agregamos los elemento del producto, en pocas palabras estamos reemplazando el elemento ya creado y solo se le agrega la cantidad inicializada (*** Aqui estamos utilizando spread ***)
       carrito[producto.id] = { ...producto };
       // console.log(carrito);
@@ -116,6 +140,7 @@ const mostrarCarrito = () => {
     //botones
     template.querySelector(".incrementar").dataset.id = producto.id;
     template.querySelector(".decrementar").dataset.id = producto.id;
+    template.querySelector(".eliminar").dataset.id = producto.id;
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
@@ -150,6 +175,7 @@ const mostrarCarrito2 = () => {
     //botones
     template.querySelector(".incrementar").dataset.id = producto.id;
     template.querySelector(".decrementar").dataset.id = producto.id;
+    template.querySelector(".eliminar").dataset.id = producto.id;
 
     const clone = template.cloneNode(true);
     fragment.appendChild(clone);
@@ -289,9 +315,38 @@ const mostrarFooterCarrito2 = () => {
   });
 };
 
+const alertEliminar = (mensaje) => {
+  swal.fire({
+    position: "bottom-end",
+    showConfirmButtom: true,
+    // toast: true,
+    timer: 3000,
+    // timerProgressBar: true,
+    // title: mensaje,
+    text: mensaje,
+    icon: "success",
+    confirmButtonText: "Ok",
+    background: "#75b90070",
+    // backdrop: "#75b90011",
+    width: "24em",
+    color: "#eee",
+  });
+};
+
 accionBotones = () => {
   const botonesAgregar = document.querySelectorAll(".incrementar");
   const botonesEliminar = document.querySelectorAll(".decrementar");
+  const botonesVaciar = document.querySelectorAll(".eliminar");
+
+  botonesVaciar.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // console.log("Se elimino el item");
+      const producto = carrito[btn.dataset.id];
+      delete carrito[btn.dataset.id];
+      alertEliminar(`Se elimino ${producto.nombre}`);
+      mostrarCarrito();
+    });
+  });
 
   botonesAgregar.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -311,6 +366,7 @@ accionBotones = () => {
       producto.cantidad--;
       if (producto.cantidad === 0) {
         delete carrito[btn.dataset.id];
+        alertEliminar(`Se elimino ${producto.nombre}`);
         mostrarCarrito();
       } else {
         // (*** Aqui estamos utilizando spread ***)
@@ -321,12 +377,32 @@ accionBotones = () => {
   });
 };
 
+const alertProcesar = (mensaje) => {
+  swal.fire({
+    // position: "bottom-end",
+    showConfirmButtom: true,
+    // toast: true,
+    timer: 5000,
+    // timerProgressBar: true,
+    // title: mensaje,
+    text: mensaje,
+    icon: "success",
+    confirmButtonText: "Ok",
+    background: "#75b900ab",
+    // backdrop: "#75b90011",
+    // width: "24em",
+    color: "#eee",
+  });
+};
+
 procesarCompra = () => {
   const boton2 = document.querySelector("#procesar-carrito");
   boton2.addEventListener("click", () => {
-    alert(
-      "Felicidades!! Su Compra se realizo de manera exitosa, pronto nos pondremos en contacto con usted"
-    );
+    // alert(
+    //   "Felicidades!! Su Compra se realizo de manera exitosa, pronto nos pondremos en contacto con usted"
+    // );
+
+    alertProcesar("Felicidades!! Su Compra se realizó de manera exitosa, pronto nos pondremos en contacto con usted.");
 
     carrito = {};
 
@@ -334,4 +410,4 @@ procesarCompra = () => {
   });
 };
 
-procesarCompra()
+procesarCompra();
